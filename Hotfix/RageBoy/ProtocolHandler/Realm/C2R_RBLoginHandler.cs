@@ -20,7 +20,9 @@ namespace ETHotfix
 
 		        Log.Info($"登录请求：{{Account:'{message.Account}',Password:'{message.Password}'}}");
 		        //验证账号密码是否正确
-		        var result = await dbProxy.Query<DB_Account>((p) => p.Account == message.Account && p.Password==message.Password);
+		        var result = await dbProxy.Query<DB_Account>((p) => p.Account == message.Account);
+
+                //查无此账号
 		        if (result.Count == 0)
 		        {
 		            response.Error = ProtocolErrorCode.ERR_LoginError;
@@ -28,7 +30,15 @@ namespace ETHotfix
 		            return;
 		        }
 
+                //密码错误
 		        DB_Account account = result[0] as DB_Account;
+		        if (account.Password != message.Password)
+		        {
+		            response.Error = ProtocolErrorCode.ERR_LoginError;
+		            reply(response);
+		            return;
+		        }
+                
 		        Log.Info($"账号登录成功{MongoHelper.ToJson(account)}");
 
 		        //将已在线玩家踢下线

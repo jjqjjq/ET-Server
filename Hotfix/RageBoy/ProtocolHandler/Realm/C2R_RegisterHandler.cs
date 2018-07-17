@@ -54,6 +54,7 @@ namespace ETHotfix
                 DB_UserInfo newUser = ComponentFactory.CreateWithId<DB_UserInfo>(newAccount.Id);
                 newUser.Account = $"用户{message.Account}";
                 newUser.RoleDataList.Add(1001);
+
                 //保存到数据库
                 await dbProxy.Save(newAccount);
                 await dbProxy.Save(newUser, false);

@@ -82,7 +82,7 @@ namespace ETHotfix.RageBoy
         [ProtoMember(5, IsRequired = true)]public short UnlockPoint;//解锁点
         [ProtoMember(6, IsRequired = true)]public List<int> MonsterList = new List<int>();
         [ProtoMember(7, IsRequired = true)]public List<int> HadOwnItemList = new List<int>();
-        [ProtoMember(8, IsRequired = true)]public List<int> UnSeeOwnItemList = new List<int>();
+        [ProtoMember(8, IsRequired = true)]public List<int> SeeOwnItemList = new List<int>();
         [ProtoMember(9, IsRequired = true)]public List<AchievementInfo> AchievementList = new List<AchievementInfo>();//成就
     }
 

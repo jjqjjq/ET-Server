@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using ETHotfix.RageBoy;
 using ETModel;
 using ETModel.RageBoy;
@@ -30,17 +31,20 @@ namespace ETHotfix
                 
 			    //创建User对象
 				User user = ComponentFactory.Create<User, long>(userId);
-
 			    user.AddComponent<UnitGateComponent, long>(session.Id);
-
 			    Game.Scene.GetComponent<UserComponent>().Add(user);
-
 			    await user.AddComponent<MailBoxComponent>().AddLocation();
                 
 			    //添加User对象关联到Session上
 				session.AddComponent<SessionUserComponent>().User = user;
 			    //添加消息转发组件
 				await session.AddComponent<MailBoxComponent, string>(ActorType.GateSession).AddLocation();
+                
+			    //向登录服务器发送玩家上线消息
+			    StartConfigComponent config = Game.Scene.GetComponent<StartConfigComponent>();
+			    IPEndPoint realmIPEndPoint = config.RealmConfig.GetComponent<InnerConfig>().IPEndPoint;
+			    Session realmSession = Game.Scene.GetComponent<NetInnerComponent>().Get(realmIPEndPoint);
+			    await realmSession.Call(new G2R_PlayerOnline() { UserID = userId, GateAppID = config.StartConfig.AppId });
 
 				response.PlayerId = user.Id;
 				reply(response);

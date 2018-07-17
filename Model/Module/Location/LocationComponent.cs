@@ -61,7 +61,7 @@ namespace ETModel
 		{
 			this.locations[key] = instanceId;
 
-			Log.Info($"location add key: {key} instanceId: {instanceId}");
+			//Log.Info($"location add key: {key} instanceId: {instanceId}");
 
 			// 更新db
 			//await Game.Scene.GetComponent<DBProxyComponent>().Save(new Location(key, address));
@@ -69,7 +69,7 @@ namespace ETModel
 
 		public void Remove(long key)
 		{
-			Log.Info($"location remove key: {key}");
+			//Log.Info($"location remove key: {key}");
 			this.locations.Remove(key);
 		}
 

@@ -79,6 +79,8 @@ namespace ETModel
 
 			base.Dispose();
 
+            this.OnError(ErrorCode.ERR_SocketDisconnected);
+
 			for (int i = 0; i < 4; i++)
 			{
 				this.DisConnect();

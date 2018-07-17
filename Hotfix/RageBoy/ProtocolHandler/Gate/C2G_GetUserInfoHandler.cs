@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using ETHotfix.RageBoy;
 using ETModel;
 using ETModel.RageBoy;
+using Model.RageBoy.DB;
 using RageBoy;
 
 namespace ETHotfix
@@ -34,7 +36,16 @@ namespace ETHotfix
 			    response.UnlockPoint = userInfo.UnlockPoint;
 			    response.MonsterList = userInfo.MonsterList;
 			    response.HadOwnItemList = userInfo.HadOwnItemList;
-			    response.UnSeeOwnItemList = userInfo.UnSeeOwnItemList;
+			    response.SeeOwnItemList = userInfo.UnSeeOwnItemList;
+                List<AchievementInfo> list = new List<AchievementInfo>(userInfo.AchievementList.Count);
+			    for (int i = 0; i < userInfo.AchievementList.Count; i++)
+			    {
+			        DB_AchievementInfo info = userInfo.AchievementList[i];
+
+			        AchievementInfo achievementInfo = new AchievementInfo(){DataId = info.DataId, Progress = info.Progress};
+			        list.Add(achievementInfo);
+			    }
+			    response.AchievementList = list;
 			    reply(response);
 			}
 			catch (Exception e)
